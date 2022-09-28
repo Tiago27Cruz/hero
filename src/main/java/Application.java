@@ -12,25 +12,5 @@ public class Application {
     public static void main(String[] args) throws IOException {
         Game game = new Game();
         game.run();
-        /*
-        try {
-            TerminalSize terminalSize = new TerminalSize(40, 20);
-            DefaultTerminalFactory terminalFactory = new
-                    DefaultTerminalFactory()
-                    .setInitialTerminalSize(terminalSize);
-            Terminal terminal = terminalFactory.createTerminal();
-            Screen screen = new TerminalScreen(terminal);
-
-            screen.clear();
-            screen.setCharacter(10, 10, TextCharacter.fromCharacter('X')[0]);
-            screen.refresh();
-
-            screen.setCursorPosition(null); // we don't need a cursor
-            screen.startScreen(); // screens must be started
-            screen.doResizeIfNecessary();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
     }
 }
