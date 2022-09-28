@@ -21,13 +21,14 @@ public class Game {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-    private void draw() throws IOException {
-        this.screen.clear();
-        this.screen.setCharacter(10, 10, TextCharacter.fromCharacter('X')[0]);
-        this.screen.refresh();
-    }
-    public void run() throws IOException {
-        draw();
-    }
+        private void draw() throws IOException {
+            this.screen.clear();
+            this.screen.setCharacter(10, 10, TextCharacter.fromCharacter('X')[0]);
+            this.screen.refresh();
+        }
+        public void run() throws IOException {
+            draw();
+        }
 }
