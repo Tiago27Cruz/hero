@@ -8,7 +8,11 @@ import com.googlecode.lanterna.terminal.Terminal;
 import java.io.IOException;
 
 public class Application {
+
     public static void main(String[] args) throws IOException {
+        Game game = new Game();
+        game.run();
+        /*
         try {
             TerminalSize terminalSize = new TerminalSize(40, 20);
             DefaultTerminalFactory terminalFactory = new
@@ -27,5 +31,6 @@ public class Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        */
     }
 }
