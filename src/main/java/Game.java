@@ -1,4 +1,8 @@
+import com.googlecode.lanterna.TerminalPosition;
+import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextCharacter;
+import com.googlecode.lanterna.TextColor;
+import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
@@ -15,8 +19,9 @@ public class Game {
 
     public Game() {
         try {
-            DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
-            Terminal terminal = new DefaultTerminalFactory().createTerminal();
+            TerminalSize terminalSize = new TerminalSize(100, 100);
+            DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
+            Terminal terminal = terminalFactory.createTerminal();
             this.screen = new TerminalScreen(terminal);
             this.screen.setCursorPosition(null);
             this.screen.startScreen();
@@ -26,8 +31,9 @@ public class Game {
         }
     }
     private void draw() throws IOException {
+        TextGraphics graphics = screen.newTextGraphics();
         this.screen.clear();
-        arena.draw(this.screen);
+        arena.draw(screen.newTextGraphics());
         this.screen.refresh();
         processKey(screen.readInput());
     }
