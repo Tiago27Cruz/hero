@@ -7,9 +7,6 @@ public class Position {
         this.y = y;
     }
 
-    public Position(Object o) {
-    }
-
     public int getY() {
         return y;
     }
@@ -30,7 +27,7 @@ public class Position {
         if (this == o) return true;
         if (o == null) return false;
         if (this.getClass() != o.getClass()) return false;
-        Position p = new Position(o);
+        Position p = (Position) o;
         return this.x == p.getX() && this.y == p.getY();
     }
 
