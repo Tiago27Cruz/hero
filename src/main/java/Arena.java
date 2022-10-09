@@ -7,21 +7,55 @@ import com.googlecode.lanterna.input.KeyStroke;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Arena {
     private int width;
     private int height;
+    private Hero hero;
     private List<Wall> walls;
-
-    Hero hero = new Hero(new Position(10, 10));
+    private List<Coin> coins;
 
     public Arena(int width, int height){
         this.width = width;
         this.height = height;
+        hero = new Hero(10, 10);
         this.walls = createWalls();
+        this.coins = createCoins();
     }
+    public void draw(TextGraphics newTextGraphics) {
+        newTextGraphics.setBackgroundColor(TextColor.Factory.fromString("#336699"));
+        newTextGraphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(width, height), ' ');
+        hero.draw(newTextGraphics);
 
+        for (Wall wall : walls)
+            wall.draw(newTextGraphics);
 
+        for (Coin coin : coins)
+            coin.draw(newTextGraphics);
+    }
+    public void processKey(KeyStroke key) throws IOException {
+        System.out.println(key);
+        switch(key.getKeyType()){
+            case ArrowUp -> moveHero(hero.moveUp());
+            case ArrowDown -> moveHero(hero.moveDown());
+            case ArrowLeft -> moveHero(hero.moveLeft());
+            case ArrowRight -> moveHero(hero.moveRight());
+        }
+    }
+    private void moveHero(Position position) {
+        if (canHeroMove(position)) {
+            hero.setPosition(position);
+        }
+    }
+    private boolean canHeroMove(Position position){
+        for (Wall wall : walls){
+            if(wall.getPosition().equals(position)){
+                return false;
+            }
+        }
+        return true;
+    }
     private List<Wall> createWalls() {
         List<Wall> walls = new ArrayList<>();
         for (int c = 0; c < width; c++) {
@@ -34,40 +68,11 @@ public class Arena {
         }
         return walls;
     }
-    private void moveHero(Position position) {
-        if (canHeroMove(position)) {hero.setPosition(position);}
-    }
-
-    private boolean canHeroMove(Position position){
-        if(position.getX()+1 >= width) return false;
-        if(position.getX()-1 < 0) return false;
-        if(position.getY()+1 >= height) return false;
-        if(position.getY()-1 < 0) return false;
-        return true;
-    }
-
-    public void processKey(KeyStroke key) throws IOException {
-        System.out.println(key);
-        switch(key.getKeyType()){
-            case ArrowUp: moveHero(hero.moveUp());
-                break;
-            case ArrowDown: moveHero(hero.moveDown());
-                break;
-            case ArrowLeft: moveHero(hero.moveLeft());
-                break;
-            case ArrowRight: moveHero(hero.moveRight());
-                break;
-            case Character: if(key.getCharacter() == 'q'){System.exit(0);}
-            case EOF: System.exit(0);
-                break;
-        }
-    }
-
-    public void draw(TextGraphics newTextGraphics) {
-        newTextGraphics.setBackgroundColor(TextColor.Factory.fromString("#336699"));
-        newTextGraphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(width * 2, height * 2), ' ');
-        for (Wall wall : walls)
-            wall.draw(newTextGraphics);
-        hero.draw(newTextGraphics);
+    private List<Coin> createCoins() {
+        Random random = new Random();
+        ArrayList<Coin> coins = new ArrayList<>();
+        for (int i = 0; i < 20; i++)
+            coins.add(new Coin(random.nextInt(width - 2) + 1, random.nextInt(height - 2) + 1));
+        return coins;
     }
 }

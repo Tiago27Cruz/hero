@@ -7,6 +7,9 @@ public class Position {
         this.y = y;
     }
 
+    public Position(Object o) {
+    }
+
     public int getY() {
         return y;
     }
@@ -21,6 +24,14 @@ public class Position {
 
     public void setX(int x) {
         this.x = x;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        if (this.getClass() != o.getClass()) return false;
+        Position p = new Position(o);
+        return this.x == p.getX() && this.y == p.getY();
     }
 
 }

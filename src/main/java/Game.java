@@ -1,8 +1,4 @@
-import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
-import com.googlecode.lanterna.TextCharacter;
-import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
@@ -32,7 +28,6 @@ public class Game {
         }
     }
     private void draw() throws IOException {
-        //TextGraphics graphics = screen.newTextGraphics();
         this.screen.clear();
         arena.draw(screen.newTextGraphics());
         this.screen.refresh();
@@ -41,6 +36,11 @@ public class Game {
     public void run() throws IOException {
         while(true) {
             draw();
+            KeyStroke key = screen.readInput();
+            if (key.getKeyType() == KeyType.Character && key.getCharacter() == ('q'))
+                screen.close();
+            if (key.getKeyType() == KeyType.EOF)
+                break;
         }
     }
     private void processKey(KeyStroke key) throws IOException{
