@@ -41,7 +41,10 @@ public class Game {
                 screen.close();
             if (key.getKeyType() == KeyType.EOF)
                 break;
-            if(arena.verifyMonsterCollisions()) screen.close();
+            if(arena.verifyMonsterCollisions()){
+                System.out.println("May you REST IN (ONE) PIECE");
+                screen.close();
+            }
         }
     }
     private void processKey(KeyStroke key) throws IOException{
